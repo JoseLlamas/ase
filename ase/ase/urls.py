@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.http import HttpResponse, HttpResponse
+from django.http import HttpResponse, HttpRequest
 
-def test(request):
+def test(request:HttpRequest):
     return HttpResponse('Hola Mundo xD')
 
 urlpatterns = [
