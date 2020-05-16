@@ -9,6 +9,8 @@ class Ip(models.Model):
     mac = models.CharField(max_length=100, null=False, db_column='mac_address')
     maquina = models.ForeignKey(Maquina, on_delete=models.CASCADE, null=False, related_name='ips', db_column='maquina_id')
 
+    objects = models.Manager()
+
     class Meta:
 
         db_table = 'ips'

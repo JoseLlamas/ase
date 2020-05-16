@@ -27,7 +27,7 @@ SECRET_KEY = 'lnprs=6teu2^24vqu8j^%7!cuy5pcf33*0yib@vkkbcvb+=ob0'
 
 ENV = os.environ.get('ENV', 'development')
 # SECURITY WARNING: don't run with debug turned on in production
-DEBUG = ENV == 'development'
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '0.0.0.0',
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'app',
+    'app.apps.AppConfig',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +65,7 @@ TEMPLATES = [
         'DIRS': [
             #os.path.join(BASE_DIR, 'templates')
         ],
-        'APP_DIRS': False,
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',

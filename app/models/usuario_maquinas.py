@@ -9,6 +9,8 @@ class UsuarioMaquina(models.Model):
     activo = models.BooleanField(null=False, default=True, db_column='activo')
     maquina = models.ForeignKey(Maquina, on_delete=models.CASCADE, null=False)
 
+    objects = models.Manager()
+
     class Meta:
 
         db_table = 'usuario_maquinas'

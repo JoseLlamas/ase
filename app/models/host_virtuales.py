@@ -9,6 +9,8 @@ class HostVirtual(models.Model):
     default = models.BooleanField(null=False, db_column='default', default=False)
     servidor = models.ForeignKey(Servidor, null=False, on_delete=models.CASCADE, db_column='servidor_id', related_name='host_virtuales')
 
+    objects = models.Manager()
+
     class Meta:
 
         db_table = 'host_virtuales'

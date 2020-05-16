@@ -29,8 +29,6 @@ services:
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_DATABASE: ${MYSQL_DATABASE}
-        ports:
-            - 3306:3306
         container_name: mariadb_ase
         networks:
             ase:

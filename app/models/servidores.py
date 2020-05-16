@@ -13,6 +13,8 @@ class Servidor(models.Model):
     password_admin = models.CharField(db_column='password_admin', null=True, max_length=255)
     maquina = models.ForeignKey(Maquina, on_delete=models.CASCADE, null=False, db_column='maquina_id', related_name='servidores')
 
+    objects = models.Manager()
+
     class Meta:
 
         db_table = 'servidores'

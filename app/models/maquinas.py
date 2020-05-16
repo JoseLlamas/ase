@@ -14,6 +14,8 @@ class Maquina(models.Model):
     activo = models.BooleanField(default=True, db_column='activo', null=False)
     tipo = models.CharField(choices=TIPO_CHOISES, null=False, max_length=1)
 
+    objects = models.Manager()
+
     class Meta:
 
         db_table = 'maquinas'

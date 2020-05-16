@@ -11,6 +11,8 @@ class Aplicacion(models.Model):
     activo = models.BooleanField(default=True, db_column='activo', null=False)
     host_virtual = models.ForeignKey(HostVirtual, null=False, db_column='host_virtual_id', on_delete=models.CASCADE, related_name='aplicaciones')
 
+    objects = models.Manager()
+
     class Meta:
 
         db_table = 'aplicaciones'
