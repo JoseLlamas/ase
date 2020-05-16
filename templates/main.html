@@ -1,13 +1,17 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Inicioi ASE</title>
+    <title>{% block title %}titulo{% endblock %}</title>
 </head>
 <body>
-    hola mundo xD
+    <section class="section is-medium">
+        {% block body %}
+        {% endblock %}
+    </section>
     <script type="application/javascript" src="{% static 'vendor.build.js' %}"></script>
+    {% block js %}{% endblock %}
 </body>
 </html>
