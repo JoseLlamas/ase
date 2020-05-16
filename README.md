@@ -41,3 +41,26 @@ repositorio: Url del repositorio del codigo fuente<br />
 activo: Si la aplicación se encuentra activa<br />
 host: En caso de ser un servidor virtual en base a un nombre de servidor<br />
 puerto: En caso de que su servidor virtual esté sobre otro puerto<br />
+
+Ejemplo de .env
+
+ENV=development<br />
+MYSQL_HOST=192.168.3.3#debe apuntar a la ip del contenedor de mariadb<br/>
+MYSQL_USER=test<br />
+MYSQL_PASSWORD=test<br />
+MYSQL_DATABASE=ase<br />
+
+Levantar docker compose (MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE deben ser iguales que en .env):
+
+MYSQL_ROOT_PASSWORD=anything MYSQL_USER=test MYSQL_PASSWORD=test MYSQL_DATABASE=ase docker-compose up --build -d
+
+Para ejecutar servidor de desarrollo:
+
+Entar al contenedor: 
+
+docker exec -it ase bash
+
+Estando adentro:
+
+cd /home/ase<br />
+DJANGO_SETTINGS_MODULE=ase.settings PYTHONPATH=. django-admin runserver 0:5000<br />

@@ -1,0 +1,45 @@
+version: '3.5'
+
+services:
+
+    ase:
+        image: 'python:3.8.2'
+        hostname: 'ase'
+        container_name: ase
+        ports:
+            - '0.0.0.0:5000:5000'
+        depends_on:
+            - mariadb_ase
+        networks:
+            ase:
+                ipv4_address: 192.168.3.2
+        volumes:
+            - .:/home/ase
+        command: >
+            bash -c "apt install libmariadb-dev &&
+            cd /home/ase &&
+            pip install -r requirement.txt &&    
+            tail -F anything"
+
+    mariadb_ase:
+        image: 'mariadb:10.3'
+        hostname: 'mariadb_ase'
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+        ports:
+            - 3306:3306
+        container_name: mariadb_ase
+        networks:
+            ase:
+                ipv4_address: 192.168.3.3
+
+networks:
+    ase:
+        name: ase
+        driver: bridge
+        ipam:
+            config:
+                - subnet: '192.168.3.0/24'
