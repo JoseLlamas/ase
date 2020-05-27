@@ -11,14 +11,14 @@ from .views.rest import (
 
 router = routers.DefaultRouter()
 
-router.register('maquina', MaquinaViewSet)
-router.register('servidor', ServidorViewSet)
-router.register('aplicacion', AplicationViewSet)
-router.register('ip', IpViewSet)
-router.register('usuario-maquina', UsuarioMaquinaViewSet)
-router.register('host-virtual', HostVirtualViewSet)
+#router.register('maquina', MaquinaViewSet)
+#router.register('servidor', ServidorViewSet)
+#router.register('aplicacion', AplicationViewSet)
+#router.register('ip', IpViewSet)
+#router.register('usuario-maquina', UsuarioMaquinaViewSet)
+#router.register('host-virtual', HostVirtualViewSet)
 
 app_name = 'app'
 urlpatterns = [
-    path('rest-api/', include(router.urls))
+    
 ]
