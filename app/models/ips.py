@@ -7,7 +7,11 @@ class Ip(models.Model):
     ip = models.CharField(max_length=15, null=False, db_column='ip')
     interfaz = models.CharField(max_length=10, null=True, db_column='interfaz')
     mac = models.CharField(max_length=100, null=False, db_column='mac_address')
+    activo = models.BooleanField(default=True, db_column="activo")
     maquina = models.ForeignKey(Maquina, on_delete=models.CASCADE, null=False, related_name='ips', db_column='maquina_id')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     objects = models.Manager()
 

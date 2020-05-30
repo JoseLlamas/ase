@@ -1,24 +1,21 @@
 from django.urls import path, include
-from rest_framework import routers
-from .views.rest import (
-    MaquinaViewSet, 
-    ServidorViewSet, 
-    AplicationViewSet,
-    IpViewSet,
-    UsuarioMaquinaViewSet,
-    HostVirtualViewSet
+from rest_framework.urlpatterns import format_suffix_patterns
+from .views import (
+    APIMaquinaDetailView, 
+    APIMaquinaView,
+    APIIpView,
+    APIIpDetailView,
+    APIUsuarioMaquinaView,
+    APIUsuarioMaquinaDetailView
 )
 
-router = routers.DefaultRouter()
+app_name:str = 'app'
 
-#router.register('maquina', MaquinaViewSet)
-#router.register('servidor', ServidorViewSet)
-#router.register('aplicacion', AplicationViewSet)
-#router.register('ip', IpViewSet)
-#router.register('usuario-maquina', UsuarioMaquinaViewSet)
-#router.register('host-virtual', HostVirtualViewSet)
-
-app_name = 'app'
-urlpatterns = [
-    
-]
+urlpatterns = format_suffix_patterns([
+        path('maquina/<int:id>', APIMaquinaDetailView.as_view(), name="maquina-detail"),
+        path('maquina/', APIMaquinaView.as_view(), name="maquina-list"),
+        path('ip/<int:id>', APIIpDetailView.as_view(), name="ip-detail"),
+        path('ip/', APIIpView.as_view(), name="ip-list"),
+        path('usuario_maquina/<int:id>', APIUsuarioMaquinaDetailView.as_view(), name='usuario-maquina-detail'),
+        path('usuario_maquina/', APIUsuarioMaquinaView.as_view(), name='usuario-maquina-list')
+    ])
