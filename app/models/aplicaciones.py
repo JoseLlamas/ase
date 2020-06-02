@@ -10,6 +10,8 @@ class Aplicacion(models.Model):
     repositorio = models.CharField(max_length=255, null=True, db_column='repositorio')
     activo = models.BooleanField(default=True, db_column='activo', null=False)
     host_virtual = models.ForeignKey(HostVirtual, null=False, db_column='host_virtual_id', on_delete=models.CASCADE, related_name='aplicaciones')
+    created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     objects = models.Manager()
 

@@ -8,6 +8,8 @@ class HostVirtual(models.Model):
     puerto = models.IntegerField(null=False, db_column='puerto', default=80)
     default = models.BooleanField(null=False, db_column='default', default=False)
     servidor = models.ForeignKey(Servidor, null=False, on_delete=models.CASCADE, db_column='servidor_id', related_name='host_virtuales')
+    created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     objects = models.Manager()
 
