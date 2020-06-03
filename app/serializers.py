@@ -75,10 +75,14 @@ class MaquinaSerializer(serializers.ModelSerializer):
 
     def create(self, validate_data):
         data_ips = validate_data.pop('ips', None)
+        data_usuario_maquinas = validate_data.pop('usuarios', None)
         maquina = Maquina.objects.create(**validate_data)
         if data_ips is not None:
             for data_ip in data_ips:
                 Ip.objects.create(maquina=maquina, **data_ip)
+        if data_usuario_maquinas is not None:
+            for data_usuario_maquina in data_usuario_maquinas:
+                UsuarioMaquina.objects.create(maquina=maquina, **data_usuario_maquina)
         return maquina
 
     def update(self, instance, validate_data):

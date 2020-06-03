@@ -42,6 +42,9 @@ class APIMaquinaDetailView(APIView):
             for ip in maquina.ips.all():
                 ip.activo = False
                 ip.save()
+            for usuario in maquina.usuarios.all():
+                usuario.activo = False
+                usuario.save()
             maquina.activo = False
             maquina.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
