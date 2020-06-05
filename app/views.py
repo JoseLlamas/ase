@@ -8,9 +8,13 @@ from .serializers import (
     IpSerializer, 
     IpSerializerUpdate, 
     UsuarioMaquinaSerializer, 
-    UsuarioMaquinaUpdateSerializer
+    UsuarioMaquinaUpdateSerializer,
+    ServidorSerializer,
+    ServidorUpdateSerializer,
+    HostVirtualSerializer,
+    HostVirtualUpdateSerializer
 )
-from app.models import Maquina, Ip, UsuarioMaquina
+from app.models import Maquina, Ip, UsuarioMaquina, Servidor, HostVirtual
 
 
 class APIMaquinaDetailView(APIView):
@@ -155,3 +159,55 @@ class APIUsuarioMaquinaView(APIView):
                 serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
+class APIServidorView(APIView):
+
+    def get(self, request):
+        serializer = ServidorSerializer(Servidor.objects.all(), many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ServidorSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            with transaction.atomic():
+                serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class APIServidorDetailView(APIView):
+
+    def _get_object(self, id):
+        try:
+            return Servidor.objects.get(pk=id)
+        except Servidor.DoesNotExist:
+            raise Http404
+
+    def get(self, request, id):
+        servidor = self._get_object(id)
+        return Response(ServidorSerializer(servidor).data)
+
+    def put(self, request, id):
+        servidor = self._get_object(id)
+        serializer = ServidorSerializer(servidor, data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            with transaction.atomic():
+                serializer.save()
+            return Response(serializers.data, status=status.HTTP_202_ACCEPTED)
+
+    def delete(self, request, id):
+        servidor = self._get_object(id)
+        with transaction.atomic():
+            servidor.activo = False
+            servidor.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class APIHostVirtualView(APIView):
+
+
+    def get(self, request):
+        serializer = HostVirtualSerializer(HostVirtual.objects.all(), many=True)

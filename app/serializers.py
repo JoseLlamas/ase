@@ -2,6 +2,9 @@ from rest_framework import serializers
 from app.models import Maquina
 from app.models import Ip
 from app.models import UsuarioMaquina
+from app.models import Servidor
+from app.models import Aplicacion
+from app.models import HostVirtual
 
 ####serializers para modelos Ip
 class _IpSerializerMetaMixim():
@@ -92,4 +95,102 @@ class MaquinaSerializer(serializers.ModelSerializer):
         instance.nombre = validate_data.get('nombre')
         instance.save()
         return instance
+
+###############serializers para servidores
+
+class ServidorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = Servidor
+        fields = [
+            'id',
+            'modo',
+            'nombre',
+            'version',
+            'root_path',
+            'puerto_admin',
+            'usuario_admin',
+            'password_admin',
+            'maquina',
+            'valido',
+            'created_at'
+        ]
+        read_only_fields = ['created_at']
+
+
+class ServidorUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = Servidor
+        fields = [
+            'id',
+            'modo',
+            'nombre',
+            'version',
+            'root_path',
+            'puerto_admin',
+            'usuario_admin',
+            'password_admin',
+            'maquina',
+            'valido',
+            'created_at'
+        ]
+        read_only_fields = [
+            'maquina',
+            'valido',
+            'created_at'
+        ]
+
+##########################
+
+######serializers host-virtual
+
+class HostVirtualSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = HostVirtual
+        fields = [
+            'id',
+            'nombre',
+            'puerto',
+            'activo',
+            'created_at',
+            'servidor'
+        ]
+        read_only_fields = [
+            'created_at'
+        ]
+
+class HostVirtualUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = HostVirtual
+        fields = [
+            'id',
+            'nombre',
+            'puerto',
+            'activo',
+            'created_at',
+            'servidor'
+        ]
+        read_only_fields = [
+            'created_at',
+            'servidor',
+            'activo'
+        ]
+
+
+##############
+
+#######serializers aplicaciones########
+
+class AplicacionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = Aplicacion
 
