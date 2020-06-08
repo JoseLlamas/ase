@@ -211,3 +211,14 @@ class APIHostVirtualView(APIView):
 
     def get(self, request):
         serializer = HostVirtualSerializer(HostVirtual.objects.all(), many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = HostVirtualSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            with transaction.atomic():
+                serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
