@@ -8,7 +8,8 @@ from .views import (
     APIUsuarioMaquinaDetailView,
     APIServidorView,
     APIServidorDetailView,
-    APIHostVirtualView
+    APIHostVirtualView,
+    APIHostVirtualDetailView
 )
 
 app_name:str = 'app'
@@ -22,5 +23,6 @@ urlpatterns = [
     path('usuario_maquina', APIUsuarioMaquinaView.as_view(), name='usuario-maquina-list'),
     path('servidor', APIServidorView.as_view(), name='servidor-list'),
     path('servidor/<int:id>', APIServidorDetailView.as_view(), name='servidor-detail'),
-    path('host_virtual', APIHostVirtualView.as_view(), name='host_virtual-list')
+    path('host_virtual', APIHostVirtualView.as_view(), name='host_virtual-list'),
+    path('host_virtual/<int:id>', APIHostVirtualDetailView.as_view(), name='host_virtual-detail')
 ]

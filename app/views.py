@@ -221,4 +221,34 @@ class APIHostVirtualView(APIView):
             with transaction.atomic():
                 serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
+
+
+class APIHostVirtualDetailView(APIView):
+
+    def _get_object(self, id:int):
+        try:
+            return HostVirtual.objects.get(pk=id)
+        except HostVirtual.DoesNotExist:
+            raise Http404
+
+    def get(self, request, id:int):
+        host_virtual = self._get_object(id)
+        serializer = HostVirtualSerializer(host_virtual)
+        return Response(serializer.data)
+
+    def put(self, request, id:int):
+        host_virtual = self._get_object(id)
+        serializer = HostVirtualUpdateSerializer(host_virtual, data=request.data)
+        if serializer.is_valid():
+            with transaction.atomic():
+                serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id:int):
+        host_virtual = self._get_object(id)
+        with transaction.atomic():
+            host_virtual.activo = False
+            host_virtual.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
