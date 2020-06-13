@@ -9,7 +9,9 @@ from .views import (
     APIServidorView,
     APIServidorDetailView,
     APIHostVirtualView,
-    APIHostVirtualDetailView
+    APIHostVirtualDetailView,
+    APIAplicacionDetailView,
+    APIAplicacionView
 )
 
 app_name:str = 'app'
@@ -24,5 +26,7 @@ urlpatterns = [
     path('servidor', APIServidorView.as_view(), name='servidor-list'),
     path('servidor/<int:id>', APIServidorDetailView.as_view(), name='servidor-detail'),
     path('host_virtual', APIHostVirtualView.as_view(), name='host_virtual-list'),
-    path('host_virtual/<int:id>', APIHostVirtualDetailView.as_view(), name='host_virtual-detail')
+    path('host_virtual/<int:id>', APIHostVirtualDetailView.as_view(), name='host_virtual-detail'),
+    path('aplicacion', APIAplicacionView.as_view(), name='aplicacion-list'),
+    path('aplicacion/<int:id>', APIAplicacionDetailView.as_view(), name='aplicacion-detail')
 ]

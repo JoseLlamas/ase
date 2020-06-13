@@ -12,9 +12,11 @@ from .serializers import (
     ServidorSerializer,
     ServidorUpdateSerializer,
     HostVirtualSerializer,
-    HostVirtualUpdateSerializer
+    HostVirtualUpdateSerializer,
+    AplicacionSerializer,
+    AplicacionUpdateSerializer
 )
-from app.models import Maquina, Ip, UsuarioMaquina, Servidor, HostVirtual
+from app.models import Maquina, Ip, UsuarioMaquina, Servidor, HostVirtual, Aplicacion
 
 
 class APIMaquinaDetailView(APIView):
@@ -190,13 +192,13 @@ class APIServidorDetailView(APIView):
 
     def put(self, request, id):
         servidor = self._get_object(id)
-        serializer = ServidorSerializer(servidor, data=request.data)
+        serializer = ServidorUpdateSerializer(servidor, data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             with transaction.atomic():
                 serializer.save()
-            return Response(serializers.data, status=status.HTTP_202_ACCEPTED)
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
     def delete(self, request, id):
         servidor = self._get_object(id)
@@ -251,4 +253,48 @@ class APIHostVirtualDetailView(APIView):
         with transaction.atomic():
             host_virtual.activo = False
             host_virtual.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class APIAplicacionView(APIView):
+
+    def get(self, request):
+        serializer = AplicacionSerializer(Aplicacion.objects.all(), many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = AplicacionSerializer(data=request.data)
+        if serializer.is_valid():
+            with transaction.atomic():
+                serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class APIAplicacionDetailView(APIView):
+
+    def _get_object(self, id):
+        try:
+            return Aplicacion.objects.get(pk=id)
+        except Aplicacion.DoesNotExist:
+            raise Http404
+
+    def get(self, request, id:int):
+        serializer = AplicacionSerializer(self._get_object(id))
+        return Response(serializer.data)
+
+    def put(self, request, id:int):
+        serializer = AplicacionUpdateSerializer(self._get_object(id), data=request.data)
+        if serializer.is_valid():
+            with transaction.atomic():
+                serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id:int):
+        aplicacion = self._get_object(id)
+        with transaction.atomic():
+            aplicacion.activo = False
+            aplicacion.save()
         return Response(status=status.HTTP_204_NO_CONTENT)

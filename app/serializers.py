@@ -5,6 +5,7 @@ from app.models import UsuarioMaquina
 from app.models import Servidor
 from app.models import Aplicacion
 from app.models import HostVirtual
+from app.models import Aplicacion
 
 ####serializers para modelos Ip
 class _IpSerializerMetaMixim():
@@ -113,10 +114,10 @@ class ServidorSerializer(serializers.ModelSerializer):
             'usuario_admin',
             'password_admin',
             'maquina',
-            'valido',
+            'activo',
             'created_at'
         ]
-        read_only_fields = ['created_at']
+        read_only_fields = ['created_at', 'activo']
 
 
 class ServidorUpdateSerializer(serializers.ModelSerializer):
@@ -134,12 +135,12 @@ class ServidorUpdateSerializer(serializers.ModelSerializer):
             'usuario_admin',
             'password_admin',
             'maquina',
-            'valido',
+            'activo',
             'created_at'
         ]
         read_only_fields = [
             'maquina',
-            'valido',
+            'activo',
             'created_at'
         ]
 
@@ -158,10 +159,12 @@ class HostVirtualSerializer(serializers.ModelSerializer):
             'puerto',
             'activo',
             'created_at',
-            'servidor'
+            'servidor',
+            'default'
         ]
         read_only_fields = [
-            'created_at'
+            'created_at',
+            'default'
         ]
 
 class HostVirtualUpdateSerializer(serializers.ModelSerializer):
@@ -193,4 +196,37 @@ class AplicacionSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = Aplicacion
+        fields = [
+            'nombre',
+            'ruta_web',
+            'version',
+            'repositorio',
+            'activo',
+            'host_virtual',
+            'created_at'
+        ]
+        read_only_fields = [
+            'created_at',
+            'activo'
+        ]
+
+
+class AplicacionUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = Aplicacion
+        fields =  [
+            'nombre',
+            'ruta_web',
+            'version',
+            'repositorio',
+            'activo',
+            'host_virtual'
+        ]
+        read_only_fields = [
+            'created_at',
+            'activo',
+            'host_virtual'
+        ]
 
